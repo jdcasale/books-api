@@ -1,0 +1,23 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                      controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /                                  controllers.BooksController.index
+GET     /books/                            controllers.BooksController.getBooks
+POST 	/books/                            controllers.BooksController.addBook
+
+GET     /authors/                          controllers.AuthorsController.getAuthors
+POST    /authors/                          controllers.AuthorsController.addAuthor
+
+GET    /books/search/:searchStr            controllers.BooksController.searchBooks(searchStr)
+GET    /booksAuthors/search/:searchStr     controllers.BooksController.searchBA(searchStr)
+
+PUT    /books/                             controllers.BooksController.updateBook
+POST   /authors/update/                    controllers.AuthorsController.updateAuthor
+
+PUT    /bulkload/:fname                    controllers.BooksController.loadFromLocalCsv(fname)
