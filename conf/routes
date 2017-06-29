@@ -18,6 +18,5 @@ GET    /books/search/:searchStr            controllers.BooksController.searchBoo
 GET    /booksAuthors/search/:searchStr     controllers.BooksController.searchBA(searchStr)
 
 PUT    /books/                             controllers.BooksController.updateBook
-POST   /authors/update/                    controllers.AuthorsController.updateAuthor
 
 PUT    /bulkload/:fname                    controllers.BooksController.loadFromLocalCsv(fname)

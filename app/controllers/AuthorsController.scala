@@ -25,13 +25,6 @@ class AuthorsController  @Inject()(repo: BookRepository, val messagesApi: Messag
     )(CreateAuthorForm.apply)(CreateAuthorForm.unapply)
   }
 
-  val updateAuthorForm: Form[UpdateAuthorForm] = Form {
-    mapping(
-      "oldName" -> nonEmptyText,
-      "newName" -> nonEmptyText
-    )(UpdateAuthorForm.apply)(UpdateAuthorForm.unapply)
-  }
-
   /**
     * The index action.
     */
@@ -58,25 +51,6 @@ class AuthorsController  @Inject()(repo: BookRepository, val messagesApi: Messag
         repo.createAuthor(author.name).map { _ =>
           // If successful, we simply redirect to the index page.
           Redirect(routes.BooksController.index)
-        }
-      }
-    )
-  }
-
-  def updateAuthor = Action.async { implicit request =>
-    // Bind the form first, then fold the result, passing a function to handle errors, and a function to handle succes.
-    updateAuthorForm.bindFromRequest.fold(
-      // The error function. We return the index page with the error form, which will render the errors.
-      // We also wrap the result in a successful future, since this action is synchronous, but we're required to return
-      // a future because the person creation function returns a future.
-      errorForm => {
-        Future.successful(Ok(views.html.index()))
-      },
-      // There were no errors in the from, so create the person.
-      author => {
-        repo.updateAuthorDescription(author.oldName, author.newName).map { _ =>
-          // If successful, we simply redirect to the index page.
-          Redirect(routes.BooksController.index())
         }
       }
     )
